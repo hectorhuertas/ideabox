@@ -1,7 +1,17 @@
 $(document).ready(function(){
   refreshIdeas()
   $('#save-idea').on('click', saveIdea)
+  $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
 })
+
+
+function deleteIdea(){
+  var id = this.parentElement.dataset.id
+  $.ajax({
+    type: 'DELETE',
+    url: '/api/v1/ideas/' + id
+  }).success(refreshIdeas)
+}
 
 function saveIdea(){
   $.ajax({
@@ -39,8 +49,10 @@ function appendAllTo(items, $target){
 }
 
 function html_for(idea) {
-  return '<li class="list-group-item">' +
+  return '<li data-id="' + idea.id +
+  '" class="list-group-item">' +
   idea.title + ': ' + limit_length(idea.body) +
+  '<button type="button" name="button" class="deleter btn btn-danger btn-sm pull-xs-right">Delete</button>' +
   '<span class="label label-' +
   color_for(idea.quality) +
   ' label-pill pull-xs-right">' +
