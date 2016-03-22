@@ -1,8 +1,29 @@
-$(document).ready(
+$(document).ready(function(){
   refreshIdeas()
-)
+  $('#save-idea').on('click', saveIdea)
+})
+
+function saveIdea(){
+  $.ajax({
+    type: 'POST',
+    url: '/api/v1/ideas',
+    data: {title: title(), body: body()}
+  }).success(refreshIdeas)
+  clearForm()
+}
+
+function clearForm(){
+  $('#idea-title').val("")
+  $('#idea-body').val("")
+}
+
+function title(){ return $('#idea-title').val() }
+
+function body(){ return $('#idea-body').val() }
 
 function refreshIdeas(){
+  $('#idea-box').empty()
+
   $.ajax({
     action: 'GET',
     url: '/api/v1/ideas'
