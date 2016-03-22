@@ -1,9 +1,29 @@
 $(document).ready(function(){
   refreshIdeas()
   $('#save-idea').on('click', saveIdea)
+  $('#idea-box').delegate('button.upvoter',   'click', upvoteIdea)
+  $('#idea-box').delegate('button.downvoter', 'click', downvoteIdea)
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
 })
 
+function upvoteIdea(){
+  var id = this.parentElement.dataset.id
+  var url = '/api/v1/ideas/' + id + '/upvote'
+  voteIdea(url)
+}
+
+function downvoteIdea(){
+  var id = this.parentElement.dataset.id
+  var url = '/api/v1/ideas/' + id + '/downvote'
+  voteIdea(url)
+}
+
+function voteIdea(url){
+  $.ajax({
+    type: 'PATCH',
+    url: url
+  }).success(refreshIdeas)
+}
 
 function deleteIdea(){
   var id = this.parentElement.dataset.id
@@ -53,6 +73,8 @@ function html_for(idea) {
   '" class="list-group-item">' +
   idea.title + ': ' + limit_length(idea.body) +
   '<button type="button" name="button" class="deleter btn btn-danger btn-sm pull-xs-right">Delete</button>' +
+  '<button type="button" name="button" class="downvoter btn btn-warning btn-sm pull-xs-right">Downvote</button>' +
+  '<button type="button" name="button" class="upvoter btn btn-success btn-sm pull-xs-right">Upvote</button>' +
   '<span class="label label-' +
   color_for(idea.quality) +
   ' label-pill pull-xs-right">' +
