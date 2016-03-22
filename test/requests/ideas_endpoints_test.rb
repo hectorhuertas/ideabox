@@ -46,4 +46,28 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
 
     assert_equal 0, Idea.count
   end
+
+  test "upvote a swill idea" do
+    idea = Idea.create()
+
+    patch "/api/v1/ideas/#{idea.id}/upvote"
+
+    assert_equal 'plausible', idea.reload.quality
+  end
+
+  test "upvote a plausible idea" do
+    idea = Idea.create(quality: 1)
+
+    patch "/api/v1/ideas/#{idea.id}/upvote"
+
+    assert_equal 'genius', idea.reload.quality
+  end
+
+  test "upvote a genius idea does nothing" do
+    idea = Idea.create(quality: 2)
+
+    patch "/api/v1/ideas/#{idea.id}/upvote"
+
+    assert_equal 'genius', idea.reload.quality
+  end
 end
