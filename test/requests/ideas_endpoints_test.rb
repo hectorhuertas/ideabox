@@ -70,4 +70,28 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
 
     assert_equal 'genius', idea.reload.quality
   end
+
+  test "downvote a swill idea does nothing" do
+    idea = Idea.create()
+
+    patch "/api/v1/ideas/#{idea.id}/downvote"
+
+    assert_equal 'swill', idea.reload.quality
+  end
+
+  test "downvote a plausible idea" do
+    idea = Idea.create(quality: 1)
+
+    patch "/api/v1/ideas/#{idea.id}/downvote"
+
+    assert_equal 'swill', idea.reload.quality
+  end
+
+  test "downvote a genius idea" do
+    idea = Idea.create(quality: 2)
+
+    patch "/api/v1/ideas/#{idea.id}/downvote"
+
+    assert_equal 'plausible', idea.reload.quality
+  end
 end

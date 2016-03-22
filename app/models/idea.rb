@@ -6,4 +6,8 @@ class Idea < ActiveRecord::Base
   def upvote
     (self['quality'] += 1) && save unless quality == 'genius'
   end
+
+  def downvote
+    (self['quality'] -= 1) && save unless quality == 'swill'
+  end
 end

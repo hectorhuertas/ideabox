@@ -20,6 +20,11 @@ class Api::V1::IdeasController < Api::ApiController
     render json: {message:"done"}
   end
 
+  def downvote
+    Idea.find(params[:idea_id]).downvote
+    render json: {message:"done"}
+  end
+
   private
     def idea_params
       {title: params[:title], body: params[:body]}
