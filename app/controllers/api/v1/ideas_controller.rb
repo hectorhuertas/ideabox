@@ -12,7 +12,7 @@ class Api::V1::IdeasController < Api::ApiController
 
   def destroy
     Idea.find(params[:id]).destroy
-    render json: "done"
+    render json: {message:"done"}
   end
 
   private
