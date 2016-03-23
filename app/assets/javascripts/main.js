@@ -18,16 +18,16 @@ function sortByQuality(){
     var av = value.indexOf($(a).find('.label').text())
     var bv = value.indexOf($(b).find('.label').text())
 
-    if (current_order === 'asc') {
+    if (currentOrder === 'asc') {
       return bv - av
     } else { return av - bv }
   })
 
-  if (current_order === 'asc') {
+  if (currentOrder === 'asc') {
     this.dataset.order = 'desc'
   } else { this.dataset.order = 'asc' }
 
-  $('#idea-box').empty().append(bob)
+  $('#idea-box').empty().append(sortedIdeas)
 }
 
 function fuzzyFilter(){
@@ -109,14 +109,21 @@ function saveIdea(e){
   $.ajax({
     type: 'POST',
     url: '/api/v1/ideas',
-    data: {title: title(), body: body()}
+    data: {title: title(), body: body(), tags: tags()}
   }).success(refreshIdeas)
   clearForm()
+}
+
+function tags(){
+  return $('#idea-tags').val().split(",")
+                        .map(function(w){return w.trim()})
+                        .filter(function(w){return w})
 }
 
 function clearForm(){
   $('#idea-title').val("")
   $('#idea-body').val("")
+  $('#idea-tags').val("")
 }
 
 function title(){ return $('#idea-title').val() }

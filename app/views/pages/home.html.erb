@@ -62,7 +62,12 @@
     </fieldset>
     <fieldset class="form-group">
       <label for="idea-body">Body</label>
-      <textarea class="form-control" id="idea-body" rows="4"></textarea>
+      <textarea class="form-control" id="idea-body" rows="4" placeholder="Enter body"></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="idea-tags">Tags</label>
+      <input type="text" class="form-control" id="idea-tags" placeholder="app, tutorial, business" value="app, tutorial">
+      <small class="text-muted">Enter tags separated by commas.</small>
     </fieldset>
     <button id="save-idea" type="submit" class="btn btn-primary">Save idea</button>
   </form>
