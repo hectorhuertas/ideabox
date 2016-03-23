@@ -9,8 +9,15 @@ $(document).ready(function(){
 })
 
 function updateIdea(){
-// make the ajax call and refresh everything
-refreshIdeas()
+  var title = $(this.parentElement).find('.title').text()
+  var body  = $(this.parentElement).find('.body').text()
+  var id = this.parentElement.dataset.id
+
+  $.ajax({
+    type: 'PATCH',
+    url: '/api/v1/ideas/' + id,
+    data: {title:title, body:body}
+  }).success(refreshIdeas)
 }
 
 function editIdea(){

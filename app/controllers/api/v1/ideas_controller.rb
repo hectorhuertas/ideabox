@@ -10,6 +10,11 @@ class Api::V1::IdeasController < Api::ApiController
     render json: idea
   end
 
+  def update
+    idea = Idea.update(params[:id],idea_params)
+    render json: idea
+  end
+
   def destroy
     Idea.find(params[:id]).destroy
     render json: {message:"done"}
