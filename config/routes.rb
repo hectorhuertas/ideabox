@@ -7,6 +7,8 @@ Rails.application.routes.draw do
         patch '/upvote',   to: "ideas#upvote"
         patch '/downvote', to: "ideas#downvote"
       end
+
+      resources :tags, only: [:index]
     end
   end
 end

@@ -3,12 +3,72 @@ $(document).ready(function(){
   $('#save-idea').on('click', saveIdea)
   $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
+  $('#bob').on('click', cleanFilters)
   $('#idea-box').delegate('button.upvoter',   'click', upvoteIdea)
   $('#idea-box').delegate('button.downvoter', 'click', downvoteIdea)
   $('#idea-box').delegate('button.editor',    'click', editIdea)
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
   $('#idea-box').delegate('button.updater',   'click', updateIdea)
+  $('#tag-list').delegate('button', 'click', filterTag)
 })
+
+function cleanFilters(){
+  $.each($('.idea'), function(){
+    $(this).show()
+  })
+
+}
+
+function toggleFilter(e){
+  // debugger
+  if ($(this).hasClass('btn-primary-outline')) {
+    filterTag(e)
+  } else {
+    unfilterTag(e)
+  }
+  $(this).toggleClass('btn-primary-outline')
+  $(this).toggleClass('btn-primary')
+}
+
+function unfilterTag(e){
+  debugger
+  var that = e.target
+  console.log(this);
+  var filter = $(that).html()
+
+  $.each($('.idea'), function(){
+    var title = $(this).find('.title').text()
+    var body  = $(this).find('.body') .text()
+    var text  = title + ': ' + body
+    debugger
+
+    if (this.dataset.tags.includes(filter)) {
+      $(this).hide()
+    } else {
+      $(this).show()
+    }
+  })
+
+}
+
+function filterTag(e){
+  // debugger
+  var that = e.target
+  // console.log(this);
+  var filter = $(that).html()
+
+  $.each($('.idea'), function(){
+    var title = $(this).find('.title').text()
+    var body  = $(this).find('.body') .text()
+    var text  = title + ': ' + body
+    debugger
+
+    if (!this.dataset.tags.includes(filter)) {
+      $(this).hide()
+    }
+  })
+
+}
 
 function sortByQuality(){
   var currentOrder = this.dataset.order
@@ -18,16 +78,16 @@ function sortByQuality(){
     var av = value.indexOf($(a).find('.label').text())
     var bv = value.indexOf($(b).find('.label').text())
 
-    if (current_order === 'asc') {
+    if (currentOrder === 'asc') {
       return bv - av
     } else { return av - bv }
   })
 
-  if (current_order === 'asc') {
+  if (currentOrder === 'asc') {
     this.dataset.order = 'desc'
   } else { this.dataset.order = 'asc' }
 
-  $('#idea-box').empty().append(bob)
+  $('#idea-box').empty().append(sortedIdeas)
 }
 
 function fuzzyFilter(){
@@ -109,14 +169,21 @@ function saveIdea(e){
   $.ajax({
     type: 'POST',
     url: '/api/v1/ideas',
-    data: {title: title(), body: body()}
+    data: {title: title(), body: body(), tags: tags()}
   }).success(refreshIdeas)
   clearForm()
+}
+
+function tags(){
+  return $('#idea-tags').val().split(",")
+                        .map(function(w){return w.trim()})
+                        .filter(function(w){return w})
 }
 
 function clearForm(){
   $('#idea-title').val("")
   $('#idea-body').val("")
+  $('#idea-tags').val("")
 }
 
 function title(){ return $('#idea-title').val() }
@@ -125,11 +192,29 @@ function body(){ return $('#idea-body').val() }
 
 function refreshIdeas(){
   $('#idea-box').empty()
-
+  $('#tag-list').empty()
+  refreshTags()
   $.ajax({
     action: 'GET',
     url: '/api/v1/ideas'
   }).success(appendAllToIdeasBox)
+}
+
+function refreshTags(){
+  $.ajax({
+    action: 'GET',
+    url: '/api/v1/tags'
+  }).success(function (tags){
+    var buttons = tags.map(function(tag){
+      return '<button id="'+
+      tag.name+
+      '" type="button" class="btn btn-primary-outline" name="button">'+
+      tag.name+
+      '</button>'
+    })
+
+    $('#tag-list').append(buttons)
+  })
 }
 
 function appendAllToIdeasBox(ideas) { appendAllTo(ideas, $('#idea-box')) }
@@ -142,6 +227,7 @@ function appendAllTo(items, $target){
 
 function html_for(idea) {
   return '<li data-id="' + idea.id +
+  '" data-tags="'+ idea.tags.toString().replace(",", " ") +
   '" class="idea list-group-item">' +
   '<span class="title">'+ idea.title + '</span>: ' +
   '<span class="body">'+ limit_length(idea.body) + '</span>' +

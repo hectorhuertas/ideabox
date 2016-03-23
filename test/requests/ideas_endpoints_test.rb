@@ -32,7 +32,9 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
   end
 
   test "post an idea" do
-    post "/api/v1/ideas?title=title&body=body"
+    skip
+    tags = ['app', 'otra'].to_json
+    post "/api/v1/ideas?title=title&body=body&tags=#{tags}"
 
     idea = Idea.last
     assert_equal "title", idea.title

@@ -17,6 +17,16 @@
     <div class="col-xs-12">
       <button id="sort-by-quality" data-order="asc" type="button" class="btn btn-success" name="button">Sort by Quality</button>
     </div>
+    <div class="col-xs-12">
+      <button id="bob" type="button" class="btn btn-success" name="sdf">Clear filters</button>
+    </div>
+    <div class="col-xs-12">
+      <ul id="tag-list" class="list-group">
+        <button id="sort-sby-quality" data-order="asc" type="button" class="btn btn-primary-outline" name="button">Sort by Quality</button>
+        <button id="sort-sby-quality" data-order="asc" type="button" class="btn btn-primary-outline" name="button">Sort by Quality</button>
+        <button id="sort-sby-quality" data-order="asc" type="button" class="btn btn-primary-outline" name="button">Sort by Quality</button>
+      </ul>
+    </div>
   </div>
   <br>
   <div class="row">
@@ -62,7 +72,12 @@
     </fieldset>
     <fieldset class="form-group">
       <label for="idea-body">Body</label>
-      <textarea class="form-control" id="idea-body" rows="4"></textarea>
+      <textarea class="form-control" id="idea-body" rows="4" placeholder="Enter body"></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+      <label for="idea-tags">Tags</label>
+      <input type="text" class="form-control" id="idea-tags" placeholder="app, tutorial, business" value="app, tutorial">
+      <small class="text-muted">Enter tags separated by commas.</small>
     </fieldset>
     <button id="save-idea" type="submit" class="btn btn-primary">Save idea</button>
   </form>

@@ -8,6 +8,7 @@ class Api::V1::IdeasController < Api::ApiController
   def create
     idea = Idea.create(idea_params)
     render json: idea
+    # redner :api, v1, idea
   end
 
   def update
@@ -32,6 +33,14 @@ class Api::V1::IdeasController < Api::ApiController
 
   private
     def idea_params
-      {title: params[:title], body: params[:body]}
+      if params[:tags]
+        {title: params[:title], body: params[:body], tags: tags}
+      else
+        {title: params[:title], body: params[:body]}
+      end
+    end
+
+    def tags
+      params[:tags].map{|tag| Tag.find_or_create_by(name: tag)}
     end
 end
