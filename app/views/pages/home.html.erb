@@ -5,27 +5,20 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
-      <!-- <div class=""> -->
-        <fieldset class="form-group">
-          <input type="text" class="form-control" id="fuzzy-filter" placeholder="Filter...">
-        </fieldset>
-      <!-- </div> -->
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 bob">
+      <button id="show-all" type="button" class="btn btn-success" name="sdf">All ideas</button>
       <button id="sort-by-quality" data-order="asc" type="button" class="btn btn-success" name="button">Sort by Quality</button>
-    </div>
-    <div class="col-xs-12">
-      <button id="bob" type="button" class="btn btn-success" name="sdf">Clear filters</button>
-    </div>
-    <div class="col-xs-12">
-      <ul id="tag-list" class="list-group">
-        <button id="sort-sby-quality" data-order="asc" type="button" class="btn btn-primary-outline" name="button">Sort by Quality</button>
-        <button id="sort-sby-quality" data-order="asc" type="button" class="btn btn-primary-outline" name="button">Sort by Quality</button>
-        <button id="sort-sby-quality" data-order="asc" type="button" class="btn btn-primary-outline" name="button">Sort by Quality</button>
-      </ul>
+      <!-- <div class=""> -->
+      <!-- <fieldset class="form-group"> -->
+        <input type="text" class="" id="fuzzy-filter" placeholder="Search...">
+      <!-- </fieldset> -->
+      <span id="tag-list" class="">
+
+      </span>
+      <div class="">
+
+      </div>
+      <!-- </div> -->
     </div>
   </div>
   <br>
@@ -76,7 +69,8 @@
     </fieldset>
     <fieldset class="form-group">
       <label for="idea-tags">Tags</label>
-      <input type="text" class="form-control" id="idea-tags" placeholder="app, tutorial, business" value="app, tutorial">
+      <input type="text" class="form-control" id="idea-tags" placeholder="app, tutorial, business">
+      <!-- <input type="text" class="form-control" id="idea-tags" placeholder="app, tutorial, business" value="app, tutorial"> -->
       <small class="text-muted">Enter tags separated by commas.</small>
     </fieldset>
     <button id="save-idea" type="submit" class="btn btn-primary">Save idea</button>

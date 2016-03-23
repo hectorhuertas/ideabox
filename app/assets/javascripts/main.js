@@ -3,7 +3,7 @@ $(document).ready(function(){
   $('#save-idea').on('click', saveIdea)
   $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
-  $('#bob').on('click', cleanFilters)
+  $('#show-all').on('click', cleanFilters)
   $('#idea-box').delegate('button.upvoter',   'click', upvoteIdea)
   $('#idea-box').delegate('button.downvoter', 'click', downvoteIdea)
   $('#idea-box').delegate('button.editor',    'click', editIdea)
@@ -31,7 +31,7 @@ function toggleFilter(e){
 }
 
 function unfilterTag(e){
-  debugger
+  // debugger
   var that = e.target
   console.log(this);
   var filter = $(that).html()
@@ -40,7 +40,7 @@ function unfilterTag(e){
     var title = $(this).find('.title').text()
     var body  = $(this).find('.body') .text()
     var text  = title + ': ' + body
-    debugger
+    // debugger
 
     if (this.dataset.tags.includes(filter)) {
       $(this).hide()
@@ -61,7 +61,7 @@ function filterTag(e){
     var title = $(this).find('.title').text()
     var body  = $(this).find('.body') .text()
     var text  = title + ': ' + body
-    debugger
+    // debugger
 
     if (!this.dataset.tags.includes(filter)) {
       $(this).hide()
@@ -208,7 +208,7 @@ function refreshTags(){
     var buttons = tags.map(function(tag){
       return '<button id="'+
       tag.name+
-      '" type="button" class="btn btn-primary-outline" name="button">'+
+      '" type="button" class="btn btn-primary-outline ui" name="button">'+
       tag.name+
       '</button>'
     })
