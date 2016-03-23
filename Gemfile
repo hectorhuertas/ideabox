@@ -16,6 +16,10 @@ group :development, :test do
   gem 'pry'
 end
 
+group :test do
+  gem 'simplecov'
+end
+
 group :development do
   gem 'spring'
 end
