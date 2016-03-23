@@ -3,8 +3,42 @@ $(document).ready(function(){
   $('#save-idea').on('click', saveIdea)
   $('#idea-box').delegate('button.upvoter',   'click', upvoteIdea)
   $('#idea-box').delegate('button.downvoter', 'click', downvoteIdea)
+  $('#idea-box').delegate('button.editor',    'click', editIdea)
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
+  $('#idea-box').delegate('button.updater',   'click', updateIdea)
 })
+
+function updateIdea(){
+  var title = $(this.parentElement).find('.title').text()
+  var body  = $(this.parentElement).find('.body').text()
+  var id = this.parentElement.dataset.id
+
+  $.ajax({
+    type: 'PATCH',
+    url: '/api/v1/ideas/' + id,
+    data: {title:title, body:body}
+  }).success(refreshIdeas)
+}
+
+function editIdea(){
+  $(this.parentElement).find('.title').prop('contenteditable', 'true').toggleClass('editableField')
+  $(this.parentElement).find('.body').prop('contenteditable', 'true').toggleClass('editableField')
+  $(this.parentElement).find('.ui').toggle()
+}
+
+
+
+// function editForm(id){
+//   // debugger
+//   return '<form class="bg-info">'+
+//   '<fieldset class="form-group"> '+
+//   '<label for="idea-title">Title</label> '+
+//   '<input type="text" class="form-control" id="idea-title" placeholder="Enter title">'+
+//   ' <small class="text-muted">New ideas will be initially qualified as swill.</small> </fieldset> '+
+//   '<fieldset class="form-group"> '+
+//   '<label for="idea-body">Body</label> '+
+//   '<textarea class="form-control" id="idea-body" rows="4"></textarea></fieldset> <button id="save-idea" type="submit" class="btn btn-primary">Save idea</button>  </form>'
+// }
 
 function upvoteIdea(){
   var id = this.parentElement.dataset.id
@@ -33,7 +67,8 @@ function deleteIdea(){
   }).success(refreshIdeas)
 }
 
-function saveIdea(){
+function saveIdea(e){
+  e.preventDefault()
   $.ajax({
     type: 'POST',
     url: '/api/v1/ideas',
@@ -71,11 +106,14 @@ function appendAllTo(items, $target){
 function html_for(idea) {
   return '<li data-id="' + idea.id +
   '" class="list-group-item">' +
-  idea.title + ': ' + limit_length(idea.body) +
-  '<button type="button" name="button" class="deleter btn btn-danger btn-sm pull-xs-right">Delete</button>' +
-  '<button type="button" name="button" class="downvoter btn btn-warning btn-sm pull-xs-right">Downvote</button>' +
-  '<button type="button" name="button" class="upvoter btn btn-success btn-sm pull-xs-right">Upvote</button>' +
-  '<span class="label label-' +
+  '<span class="title">'+ idea.title + '</span>: ' +
+  '<span class="body">'+ limit_length(idea.body) + '</span>' +
+  '<button type="button" name="button" class="deleter   ui btn btn-danger btn-sm pull-xs-right">Delete</button>' +
+  '<button type="button" name="button" class="editor    ui btn btn-info btn-sm pull-xs-right">Edit</button>' +
+  '<button type="button" name="button" class="downvoter ui btn btn-warning btn-sm pull-xs-right">Downvote</button>' +
+  '<button type="button" name="button" class="upvoter   ui btn btn-success btn-sm pull-xs-right">Upvote</button>' +
+  '<button type="button" name="button" class="updater   ui btn btn-primary btn-sm pull-xs-right" style="display:none">Update</button>' +
+  '<span class="ui label label-' +
   color_for(idea.quality) +
   ' label-pill pull-xs-right">' +
   idea.quality +

@@ -94,4 +94,13 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
 
     assert_equal 'plausible', idea.reload.quality
   end
+
+  test "update an idea" do
+    idea = Idea.create()
+
+    patch "/api/v1/ideas/#{idea.id}?title=title&body=body"
+
+    assert_equal "title", idea.reload.title
+    assert_equal "body",  idea.reload.body
+  end
 end
