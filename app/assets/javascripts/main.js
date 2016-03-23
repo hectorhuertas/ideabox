@@ -8,7 +8,12 @@ $(document).ready(function(){
   $('#idea-box').delegate('button.editor',    'click', editIdea)
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
   $('#idea-box').delegate('button.updater',   'click', updateIdea)
+  $('#tag-list').delegate('button', 'click', filterTag)
 })
+
+function filterTag(){
+  console.log(this);
+}
 
 function sortByQuality(){
   var currentOrder = this.dataset.order
@@ -132,11 +137,29 @@ function body(){ return $('#idea-body').val() }
 
 function refreshIdeas(){
   $('#idea-box').empty()
-
+  $('#tag-list').empty()
+  refreshTags()
   $.ajax({
     action: 'GET',
     url: '/api/v1/ideas'
   }).success(appendAllToIdeasBox)
+}
+
+function refreshTags(){
+  $.ajax({
+    action: 'GET',
+    url: '/api/v1/tags'
+  }).success(function (tags){
+    var buttons = tags.map(function(tag){
+      return '<button id="'+
+      tag.name+
+      '" type="button" class="btn btn-primary-outline" name="button">'+
+      tag.name+
+      '</button>'
+    })
+
+    $('#tag-list').append(buttons)
+  })
 }
 
 function appendAllToIdeasBox(ideas) { appendAllTo(ideas, $('#idea-box')) }
