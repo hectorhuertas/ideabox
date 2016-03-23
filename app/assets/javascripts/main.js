@@ -1,6 +1,7 @@
 $(document).ready(function(){
   refreshIdeas()
   $('#save-idea').on('click', saveIdea)
+  $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
   $('#idea-box').delegate('button.upvoter',   'click', upvoteIdea)
   $('#idea-box').delegate('button.downvoter', 'click', downvoteIdea)
@@ -8,6 +9,26 @@ $(document).ready(function(){
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
   $('#idea-box').delegate('button.updater',   'click', updateIdea)
 })
+
+function sortByQuality(){
+  var currentOrder = this.dataset.order
+
+  var sortedIdeas = $('.idea').sort(function(a,b){
+    var value = ['swill', 'plausible', 'genius']
+    var av = value.indexOf($(a).find('.label').text())
+    var bv = value.indexOf($(b).find('.label').text())
+
+    if (current_order === 'asc') {
+      return bv - av
+    } else { return av - bv }
+  })
+
+  if (current_order === 'asc') {
+    this.dataset.order = 'desc'
+  } else { this.dataset.order = 'asc' }
+
+  $('#idea-box').empty().append(bob)
+}
 
 function fuzzyFilter(){
   var filter = $('#fuzzy-filter').val()
