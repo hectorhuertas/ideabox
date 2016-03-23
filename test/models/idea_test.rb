@@ -54,4 +54,13 @@ class IdeaTest < ActiveSupport::TestCase
 
     assert_equal 'plausible', idea.quality
   end
+
+  test "idea has many tags" do
+    tag_1 = Tag.create(name: 'tag_1')
+    tag_2 = Tag.create(name: 'tag_2')
+    idea = Idea.create(tags: [tag_1, tag_2])
+
+    assert idea.tags.find_by(name: tag_1.name)
+    assert idea.tags.find_by(name: tag_2.name)
+  end
 end
