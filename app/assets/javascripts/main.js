@@ -1,12 +1,28 @@
 $(document).ready(function(){
   refreshIdeas()
   $('#save-idea').on('click', saveIdea)
+  $('#fuzzy-filter').on('keyup', fuzzyFilter)
   $('#idea-box').delegate('button.upvoter',   'click', upvoteIdea)
   $('#idea-box').delegate('button.downvoter', 'click', downvoteIdea)
   $('#idea-box').delegate('button.editor',    'click', editIdea)
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
   $('#idea-box').delegate('button.updater',   'click', updateIdea)
 })
+
+function fuzzyFilter(){
+  var filter = $('#fuzzy-filter').val()
+
+  $.each($('.idea'), function(){
+    var title = $(this).find('.title').text()
+    var body  = $(this).find('.body') .text()
+    var text  = title + ': ' + body
+    if (text.includes(filter)) {
+      $(this).show()
+    } else {
+      $(this).hide()
+    }
+  })
+}
 
 function updateIdea(){
   var title = $(this.parentElement).find('.title').text()
@@ -105,7 +121,7 @@ function appendAllTo(items, $target){
 
 function html_for(idea) {
   return '<li data-id="' + idea.id +
-  '" class="list-group-item">' +
+  '" class="idea list-group-item">' +
   '<span class="title">'+ idea.title + '</span>: ' +
   '<span class="body">'+ limit_length(idea.body) + '</span>' +
   '<button type="button" name="button" class="deleter   ui btn btn-danger btn-sm pull-xs-right">Delete</button>' +
