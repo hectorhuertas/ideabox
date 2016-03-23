@@ -3,6 +3,7 @@ $(document).ready(function(){
   $('#save-idea').on('click', saveIdea)
   $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
+  $('#bob').on('click', cleanFilters)
   $('#idea-box').delegate('button.upvoter',   'click', upvoteIdea)
   $('#idea-box').delegate('button.downvoter', 'click', downvoteIdea)
   $('#idea-box').delegate('button.editor',    'click', editIdea)
@@ -11,8 +12,62 @@ $(document).ready(function(){
   $('#tag-list').delegate('button', 'click', filterTag)
 })
 
-function filterTag(){
+function cleanFilters(){
+  $.each($('.idea'), function(){
+    $(this).show()
+  })
+
+}
+
+function toggleFilter(e){
+  // debugger
+  if ($(this).hasClass('btn-primary-outline')) {
+    filterTag(e)
+  } else {
+    unfilterTag(e)
+  }
+  $(this).toggleClass('btn-primary-outline')
+  $(this).toggleClass('btn-primary')
+}
+
+function unfilterTag(e){
+  debugger
+  var that = e.target
   console.log(this);
+  var filter = $(that).html()
+
+  $.each($('.idea'), function(){
+    var title = $(this).find('.title').text()
+    var body  = $(this).find('.body') .text()
+    var text  = title + ': ' + body
+    debugger
+
+    if (this.dataset.tags.includes(filter)) {
+      $(this).hide()
+    } else {
+      $(this).show()
+    }
+  })
+
+}
+
+function filterTag(e){
+  // debugger
+  var that = e.target
+  // console.log(this);
+  var filter = $(that).html()
+
+  $.each($('.idea'), function(){
+    var title = $(this).find('.title').text()
+    var body  = $(this).find('.body') .text()
+    var text  = title + ': ' + body
+    debugger
+
+    if (!this.dataset.tags.includes(filter)) {
+      $(this).hide()
+    }
+  })
+
 }
 
 function sortByQuality(){
