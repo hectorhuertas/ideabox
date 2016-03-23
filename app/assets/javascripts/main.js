@@ -13,9 +13,9 @@ $(document).ready(function(){
 })
 
 function cleanFilters(){
-  $.each($('.idea'), function(){
-    $(this).show()
-  })
+  $.each($('.idea'), function(){ $(this).show() })
+  $('#fuzzy-filter').val("")
+  $('#tag-list button').removeClass('active')
 
 }
 
@@ -56,7 +56,7 @@ function filterTag(e){
   var that = e.target
   // console.log(this);
   var filter = $(that).html()
-
+$(that).addClass('active')
   $.each($('.idea'), function(){
     var title = $(this).find('.title').text()
     var body  = $(this).find('.body') .text()
