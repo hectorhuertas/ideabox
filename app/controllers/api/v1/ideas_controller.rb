@@ -32,6 +32,10 @@ class Api::V1::IdeasController < Api::ApiController
 
   private
     def idea_params
-      {title: params[:title], body: params[:body]}
+      {title: params[:title], body: params[:body], tags: tags}
+    end
+
+    def tags
+      params[:tags].map{|tag| Tag.find_or_create_by(name: tag)}
     end
 end
