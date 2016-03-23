@@ -172,6 +172,7 @@ function appendAllTo(items, $target){
 
 function html_for(idea) {
   return '<li data-id="' + idea.id +
+  '" data-tags="'+ idea.tags.toString().replace(",", " ") +
   '" class="idea list-group-item">' +
   '<span class="title">'+ idea.title + '</span>: ' +
   '<span class="body">'+ limit_length(idea.body) + '</span>' +
