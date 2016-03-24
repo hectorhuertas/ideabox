@@ -6,14 +6,14 @@ var Voter = {
     $.ajax({
       type: 'PATCH',
       url: '/api/v1/ideas/' + id + '/vote?vote=' + vote
-    }).success(updateQualityOf(id))
+    }).success(reloadIdea(id))
     // }).success(Generate.idea(id))
     // }).success(refreshIdeas)
 
   }
 }
 
-function updateQualityOf(id,b,c,d){
+function reloadIdea(id,b,c,d){
   $.ajax({
     action: 'GET',
     url: '/api/v1/ideas/' + id
@@ -25,7 +25,7 @@ function updateQualityOf(id,b,c,d){
   })
 }
 //
-// function updateQualityOf(id,b,c,d){
+// function reloadIdea(id,b,c,d){
 //   $.ajax({
 //     action: 'GET',
 //     url: '/api/v1/ideas/' + id

@@ -18,6 +18,7 @@ var HtmlFor = (function(){
     var span = document.createElement('span')
     span.className = "title"
     var title = document.createElement('h1')
+    title.contentEditable = true
     title.innerHTML = text
     span.appendChild(title)
     return span
@@ -55,7 +56,7 @@ var HtmlFor = (function(){
     col.className = 'col-xs-6'
 // debugger
   col.appendChild(button('Delete','deleter', 'danger'))
-  col.appendChild(button('Edit','editor', 'info'))
+  // col.appendChild(button('Edit','editor', 'info'))
   col.appendChild(button('Downvote','voter', 'warning'))
   col.appendChild(button('Upvote','voter', 'success'))
     col.appendChild(quality(qualityX))
@@ -81,6 +82,7 @@ var HtmlFor = (function(){
     col.className = 'col-xs-5'
     var span = document.createElement('span')
     span.className = "body"
+    // span.contentEditable = true
     span.innerHTML = limitLength(text)
 // debugger
   // col.appendChild(button('Delete','deleter', 'danger'))
