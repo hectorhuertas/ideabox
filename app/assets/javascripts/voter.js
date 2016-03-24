@@ -6,7 +6,8 @@ var Voter = {
     $.ajax({
       type: 'PATCH',
       url: '/api/v1/ideas/' + id + '/vote?vote=' + vote
-    }).success(reloadIdea(id))
+    }).success(Idea.reload(id))
+    // }).success(reloadIdea(id))
     // }).success(Generate.idea(id))
     // }).success(refreshIdeas)
 

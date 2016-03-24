@@ -1,11 +1,16 @@
 $(document).ready(function(){
-  refreshIdeas()
-  $('#save-idea').on('click', saveIdea)
+  $('#idea-box').empty()
+  refreshTags()
+  Idea.addAll()
+  $('#save-idea').on('click', Idea.create)
+  // $('#save-idea').on('click', saveIdea)
+
+  // refreshIdeas()
   $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
   $('#show-all').on('click', cleanFilters)
   $('#idea-box').delegate('button.voter', 'click', Voter.voteIdea)
-  $('#idea-box').delegate('button.editor',    'click', editIdea)
+  // $('#idea-box').delegate('button.editor',    'click', editIdea)
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
   $('#idea-box').delegate('button.updater',   'click', updateIdea)
   $('#tag-list').delegate('button', 'click', filterTag)
@@ -183,44 +188,47 @@ function deleteIdea(){
   }).success(refreshIdeas)
 }
 
-function saveIdea(e){
-  e.preventDefault()
-  var idea = {title: title(), body: body(), tags: tags()}
-  $.ajax({
-    type: 'POST',
-    url: '/api/v1/ideas',
-    data: {idea: idea}
-  }).success(refreshIdeas)
-  clearForm()
-}
+// function saveIdea(e){
+//   e.preventDefault()
+//   var idea = {title: title(), body: body(), tags: tags()}
+//   $.ajax({
+//     type: 'POST',
+//     url: '/api/v1/ideas',
+//     data: {idea: idea}
+//   }).success(Idea.addLast)
+//   // }).success(refreshIdeas)
+//   clearForm()
+// }
 
-function tags(){
-  return $('#idea-tags').val().split(",")
-                        .map(function(w){return w.trim()})
-                        .filter(function(w){return w})
-}
+// function tags(){
+//   return $('#idea-tags').val().split(",")
+//                         .map(function(w){return w.trim()})
+//                         .filter(function(w){return w})
+// }
 
-function clearForm(){
-  $('#idea-title').val("")
-  $('#idea-body').val("")
-  $('#idea-tags').val("")
-}
+// function clearForm(){
+//   $('#idea-title').val("")
+//   $('#idea-body').val("")
+//   $('#idea-tags').val("")
+// }
 
-function title(){ return $('#idea-title').val() }
-
-function body(){ return $('#idea-body').val() }
+// function title(){ return $('#idea-title').val() }
+//
+// function body(){ return $('#idea-body').val() }
 
 function refreshIdeas(){
   $('#idea-box').empty()
-  $('#tag-list').empty()
   refreshTags()
-  $.ajax({
-    action: 'GET',
-    url: '/api/v1/ideas'
-  }).success(appendAllToIdeasBox)
+  // $.ajax({
+  //   action: 'GET',
+  //   url: '/api/v1/ideas'
+  // }).success(appendAllToIdeasBox)
+  Idea.addAll()
 }
 
 function refreshTags(){
+  $('#tag-list').empty()
+
   $.ajax({
     action: 'GET',
     url: '/api/v1/tags'
