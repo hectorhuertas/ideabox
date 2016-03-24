@@ -19,11 +19,7 @@ class Api::V1::IdeasController < Api::ApiController
 
   private
     def idea_params
-      if params[:tags]
-        {title: params[:title], body: params[:body], tags: tags}
-      else
-        {title: params[:title], body: params[:body]}
-      end
+      {title: params[:title], body: params[:body], tags: tags}
     end
 
     def tags

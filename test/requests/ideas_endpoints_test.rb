@@ -43,7 +43,7 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
   test "update an idea" do
     idea = Idea.create()
 
-    patch "/api/v1/ideas/#{idea.id}?title=title&body=body"
+    patch "/api/v1/ideas/#{idea.id}?title=title&body=body", {tags: ['app','other']}
 
     assert_equal "title", idea.reload.title
     assert_equal "body",  idea.reload.body

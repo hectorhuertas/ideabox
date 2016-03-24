@@ -118,11 +118,12 @@ function updateIdea(){
   var title = $(this.parentElement).find('.title').text()
   var body  = $(this.parentElement).find('.body').text()
   var id = this.parentElement.dataset.id
+  var tags = this.parentElement.dataset.tags.split(" ")
 
   $.ajax({
     type: 'PATCH',
     url: '/api/v1/ideas/' + id,
-    data: {title:title, body:body}
+    data: {title:title, body:body, tags: tags}
   }).success(refreshIdeas)
 }
 
@@ -203,7 +204,7 @@ function appendAllTo(items, $target){
 
 function html_for(idea) {
   return '<li data-id="' + idea.id +
-  '" data-tags="'+ idea.tags.toString().replace(",", " ") +
+  '" data-tags="'+ idea.tags.join(" ") +
   '" class="idea list-group-item">' +
   '<span class="title">'+ idea.title + '</span>: ' +
   '<span class="body">'+ limit_length(idea.body) + '</span>' +
