@@ -10,4 +10,12 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def json
+    JSON.parse(response.body)
+  end
+
+  def create_ideas(n)
+    ideas = []
+    n.times { ideas << Idea.create() } && ideas
+  end
 end

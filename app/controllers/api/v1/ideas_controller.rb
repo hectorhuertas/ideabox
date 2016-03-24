@@ -17,14 +17,6 @@ class Api::V1::IdeasController < Api::ApiController
     respond_with Idea.find(params[:id]).destroy
   end
 
-  def upvote
-    respond_with Idea.find(params[:idea_id]).upvote
-  end
-
-  def downvote
-    respond_with Idea.find(params[:idea_id]).downvote
-  end
-
   private
     def idea_params
       if params[:tags]
