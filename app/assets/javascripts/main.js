@@ -4,22 +4,12 @@ $(document).ready(function(){
   $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
   $('#show-all').on('click', cleanFilters)
-  $('#idea-box').delegate('button.voter', 'click', voteIdea)
+  $('#idea-box').delegate('button.voter', 'click', Voter.voteIdea)
   $('#idea-box').delegate('button.editor',    'click', editIdea)
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
   $('#idea-box').delegate('button.updater',   'click', updateIdea)
   $('#tag-list').delegate('button', 'click', filterTag)
 })
-
-function voteIdea(e){
-  var id = this.parentElement.dataset.id
-  var vote = e.target.textContent.toLowerCase()
-
-  $.ajax({
-    type: 'PATCH',
-    url: '/api/v1/ideas/' + id + '/vote?vote=' + vote
-  }).success(refreshIdeas)
-}
 
 function cleanFilters(){
   $.each($('.idea'), function(){ $(this).show() })
