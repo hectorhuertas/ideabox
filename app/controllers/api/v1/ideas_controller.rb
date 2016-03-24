@@ -6,29 +6,23 @@ class Api::V1::IdeasController < Api::ApiController
   end
 
   def create
-    idea = Idea.create(idea_params)
-    render json: idea
-    # redner :api, v1, idea
+    respond_with :api, :v1, Idea.create(idea_params)
   end
 
   def update
-    idea = Idea.update(params[:id],idea_params)
-    render json: idea
+    respond_with Idea.update(params[:id],idea_params)
   end
 
   def destroy
-    Idea.find(params[:id]).destroy
-    render json: {message:"done"}
+    respond_with Idea.find(params[:id]).destroy
   end
 
   def upvote
-    Idea.find(params[:idea_id]).upvote
-    render json: {message:"done"}
+    respond_with Idea.find(params[:idea_id]).upvote
   end
 
   def downvote
-    Idea.find(params[:idea_id]).downvote
-    render json: {message:"done"}
+    respond_with Idea.find(params[:idea_id]).downvote
   end
 
   private

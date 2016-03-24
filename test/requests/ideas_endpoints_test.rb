@@ -32,23 +32,23 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
   end
 
   test "post an idea" do
-    skip
-    tags = ['app', 'otra'].to_json
-    post "/api/v1/ideas?title=title&body=body&tags=#{tags}"
+    post "/api/v1/ideas?title=title&body=body", {tags: ['app','other']}
 
     idea = Idea.last
     assert_equal "title", idea.title
     assert_equal "body",  idea.body
+    assert_equal %w(app other),  idea.tags.pluck(:name)
+
   end
 
-  # test "delete an idea" do
-  #   idea = Idea.create()
-  #
-  #   delete "/api/v1/ideas/#{idea.id}"
-  #
-  #   assert_equal 0, Idea.count
-  # end
-  #
+  test "delete an idea" do
+    idea = Idea.create()
+
+    delete "/api/v1/ideas/#{idea.id}"
+
+    assert_equal 0, Idea.count
+  end
+
   # test "upvote a swill idea" do
   #   idea = Idea.create()
   #
