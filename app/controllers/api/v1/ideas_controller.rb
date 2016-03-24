@@ -6,41 +6,19 @@ class Api::V1::IdeasController < Api::ApiController
   end
 
   def create
-    idea = Idea.create(idea_params)
-    render json: idea
-    # redner :api, v1, idea
+    respond_with :api, :v1, Idea.create(TagLoader.for(idea_params))
   end
 
   def update
-    idea = Idea.update(params[:id],idea_params)
-    render json: idea
+    respond_with Idea.update(params[:id],TagLoader.for(idea_params))
   end
 
   def destroy
-    Idea.find(params[:id]).destroy
-    render json: {message:"done"}
-  end
-
-  def upvote
-    Idea.find(params[:idea_id]).upvote
-    render json: {message:"done"}
-  end
-
-  def downvote
-    Idea.find(params[:idea_id]).downvote
-    render json: {message:"done"}
+    respond_with Idea.find(params[:id]).destroy
   end
 
   private
     def idea_params
-      if params[:tags]
-        {title: params[:title], body: params[:body], tags: tags}
-      else
-        {title: params[:title], body: params[:body]}
-      end
-    end
-
-    def tags
-      params[:tags].map{|tag| Tag.find_or_create_by(name: tag)}
+      params.require(:idea).permit(:title, :body, tags: [])
     end
 end
