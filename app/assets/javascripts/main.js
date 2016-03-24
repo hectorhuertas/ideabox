@@ -4,22 +4,62 @@ $(document).ready(function(){
   $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
   $('#show-all').on('click', cleanFilters)
-  $('#idea-box').delegate('button.voter', 'click', voteIdea)
+  $('#idea-box').delegate('button.voter', 'click', Voter.voteIdea)
   $('#idea-box').delegate('button.editor',    'click', editIdea)
   $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
   $('#idea-box').delegate('button.updater',   'click', updateIdea)
   $('#tag-list').delegate('button', 'click', filterTag)
+
+  $('#idea-box').delegate('span.title', 'focusout', updateTitle)
+  $('#idea-box').delegate('span.body', 'click', editBody)
+  $('#idea-box').delegate('#idea-body-editor', 'focusout', updateBody)
 })
 
-function voteIdea(e){
-  var id = this.parentElement.dataset.id
-  var vote = e.target.textContent.toLowerCase()
+function editBody(e){
+  var body = $(e.target).closest('.idea').data('full-body')
+   var xx = $(e.target).replaceWith('<textarea class="form-control" id="idea-body-editor">' + body + '</textarea>')
+   $('#idea-body-editor').height($('#idea-body-editor').prop('scrollHeight'));
+   $('#idea-body-editor').focus()
+  //  $(e.target).closest('#idea-body').height($(this).prop('scrollHeight'));
+  //  $(e.target).closest('#idea-body').height($(this).prop('scrollHeight'));
+  // debugger
+}
 
+function updateBody(e){
+  var body = $('#idea-body-editor').val()
+  var id = $(e.target).closest('.idea').data('id')
+  var tags = $(e.target).closest('.idea').data('tags').split(" ").filter(function(w){return w})
+  var idea = {body: body, tags: tags}
+  // debugger
   $.ajax({
     type: 'PATCH',
-    url: '/api/v1/ideas/' + id + '/vote?vote=' + vote
-  }).success(refreshIdeas)
+    url: '/api/v1/ideas/' + id,
+    data: {idea: idea}
+  }).success( reloadIdea(id))
+
 }
+
+function updateTitle(e){
+var title = e.target.textContent
+// var id = e.target.parentElement.parentElement.parentElement.parentElement.dataset.id
+var id = $(e.target).closest('.idea').data('id')
+var tags = $(e.target).closest('.idea').data('tags').split(" ").filter(function(w){return w})
+var idea = {title: title, tags: tags}
+
+$.ajax({
+  type: 'PATCH',
+  url: '/api/v1/ideas/' + id,
+  data: {idea: idea}
+}).success(refreshIdeas)
+// debugger
+}
+
+// function editTitle(e){
+//   // debugger
+//   // e.stopPropagation()
+//   e.target.contentEditable = true
+//   e.target.focus()
+// }
 
 function cleanFilters(){
   $.each($('.idea'), function(){ $(this).show() })
@@ -103,6 +143,7 @@ function fuzzyFilter(){
   var filter = $('#fuzzy-filter').val()
 
   $.each($('.idea'), function(){
+    debugger
     var title = $(this).find('.title').text()
     var body  = $(this).find('.body') .text()
     var text  = title + ': ' + body
@@ -135,7 +176,7 @@ function editIdea(){
 }
 
 function deleteIdea(){
-  var id = this.parentElement.dataset.id
+  var id = this.parentElement.dataset.id || this.parentElement.parentElement.parentElement.dataset.id
   $.ajax({
     type: 'DELETE',
     url: '/api/v1/ideas/' + id
@@ -200,7 +241,10 @@ function appendAllToIdeasBox(ideas) { appendAllTo(ideas, $('#idea-box')) }
 
 function appendAllTo(items, $target){
   $.each(items, function(index, item){
-    $target.append( html_for(item) )
+    // $target.append( html_for(item) )
+    var target = document.getElementById('idea-box')
+    target.appendChild(HtmlFor.idea(item))
+    // $target.appendChild(HtmlFor.idea(item))
   })
 }
 

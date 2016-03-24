@@ -5,6 +5,10 @@ class Api::V1::IdeasController < Api::ApiController
     respond_with Idea.by_recently_updated
   end
 
+  def show
+    respond_with Idea.find(params[:id])
+  end
+
   def create
     respond_with :api, :v1, Idea.create(TagLoader.for(idea_params))
   end
