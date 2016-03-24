@@ -3,15 +3,15 @@ $(document).ready(function(){
   refreshTags()
   Idea.addAll()
   $('#save-idea').on('click', Idea.create)
-  // $('#save-idea').on('click', saveIdea)
+  $('#idea-box').delegate('button.deleter',   'click', Idea.destroy)
+  $('#idea-box').delegate('button.voter', 'click', Idea.vote)
+  // $('#idea-box').delegate('button.voter', 'click', Voter.voteIdea)
 
   // refreshIdeas()
   $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
   $('#show-all').on('click', cleanFilters)
-  $('#idea-box').delegate('button.voter', 'click', Voter.voteIdea)
   // $('#idea-box').delegate('button.editor',    'click', editIdea)
-  $('#idea-box').delegate('button.deleter',   'click', deleteIdea)
   $('#idea-box').delegate('button.updater',   'click', updateIdea)
   $('#tag-list').delegate('button', 'click', filterTag)
 
@@ -40,7 +40,7 @@ function updateBody(e){
     type: 'PATCH',
     url: '/api/v1/ideas/' + id,
     data: {idea: idea}
-  }).success( reloadIdea(id))
+  }).success( Idea.reload(id))
 
 }
 
@@ -180,13 +180,13 @@ function editIdea(){
   $(this.parentElement).find('.ui').toggle()
 }
 
-function deleteIdea(){
-  var id = this.parentElement.dataset.id || this.parentElement.parentElement.parentElement.dataset.id
-  $.ajax({
-    type: 'DELETE',
-    url: '/api/v1/ideas/' + id
-  }).success(refreshIdeas)
-}
+// function deleteIdea(){
+//   var id = this.parentElement.dataset.id || this.parentElement.parentElement.parentElement.dataset.id
+//   $.ajax({
+//     type: 'DELETE',
+//     url: '/api/v1/ideas/' + id
+//   }).success(refreshIdeas)
+// }
 
 // function saveIdea(e){
 //   e.preventDefault()

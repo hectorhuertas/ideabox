@@ -12,6 +12,10 @@ var Idea = (function(){
     ideas.forEach(function(idea){ $('#idea-box').append(HtmlFor.idea(idea)) })
   }
 
+  var destroyIdea = function(id){
+    $('li[data-id="' + id +'"]').remove()
+  }
+
   var addLast = function(id){ $.getJSON("/api/v1/ideas", addLastIdea) }
 
   var addAll = function(){ $.getJSON("/api/v1/ideas", addAllIdeas) }
@@ -37,17 +41,38 @@ var Idea = (function(){
     }
   }
 
-
   var create = function(e){
     e.preventDefault()
     $.post('/api/v1/ideas', {idea: buildIdea()}, addLast)
     clearForm()
   }
 
+  var destroy = function(e){
+    var id = $(e.target).closest('.idea').data('id')
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/v1/ideas/' + id
+    }).success(destroyIdea(id))
+  }
+
+  var vote = function(e){
+    var id = $(e.target).closest('.idea').data('id')
+    var vote = e.target.textContent.toLowerCase()
+
+    $.ajax({
+      type: 'PATCH',
+      url: '/api/v1/ideas/' + id + '/vote?vote=' + vote
+    }).success(reload(id))
+
+  }
+
   return {
     reload: reload,
     addLast: addLast,
     addAll: addAll,
-    create: create
+    create: create,
+    destroy: destroy,
+    vote: vote,
   }
 })();
