@@ -1,7 +1,8 @@
 var Voter = {
   voteIdea: function(e){
-    var id   = e.target.parentElement.dataset.id
+    var id   = e.target.parentElement.dataset.id || e.target.parentElement.parentElement.parentElement.dataset.id
     var vote = e.target.textContent.toLowerCase()
+    // debugger
     $.ajax({
       type: 'PATCH',
       url: '/api/v1/ideas/' + id + '/vote?vote=' + vote

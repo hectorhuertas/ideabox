@@ -93,6 +93,7 @@ function fuzzyFilter(){
   var filter = $('#fuzzy-filter').val()
 
   $.each($('.idea'), function(){
+    debugger
     var title = $(this).find('.title').text()
     var body  = $(this).find('.body') .text()
     var text  = title + ': ' + body
@@ -125,7 +126,7 @@ function editIdea(){
 }
 
 function deleteIdea(){
-  var id = this.parentElement.dataset.id
+  var id = this.parentElement.dataset.id || this.parentElement.parentElement.parentElement.dataset.id
   $.ajax({
     type: 'DELETE',
     url: '/api/v1/ideas/' + id
@@ -190,7 +191,10 @@ function appendAllToIdeasBox(ideas) { appendAllTo(ideas, $('#idea-box')) }
 
 function appendAllTo(items, $target){
   $.each(items, function(index, item){
-    $target.append( html_for(item) )
+    // $target.append( html_for(item) )
+    var target = document.getElementById('idea-box')
+    target.appendChild(HtmlFor.idea(item))
+    // $target.appendChild(HtmlFor.idea(item))
   })
 }
 
