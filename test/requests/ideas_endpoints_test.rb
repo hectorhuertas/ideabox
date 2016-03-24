@@ -22,14 +22,25 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
     assert_equal idea.quality, json[0]['quality']
   end
 
-  test "post an idea" do
-    post "/api/v1/ideas?title=title&body=body", {tags: ['app','other']}
+  test "post an idea without tags" do
+    idea_data = {"title"=>"title", "body"=>"body"}
+
+    post "/api/v1/ideas", {"idea"=> idea_data}
+
+    idea = Idea.last
+    assert_equal "title", idea.title
+    assert_equal "body",  idea.body
+  end
+
+  test "post an idea with tags" do
+    idea_data = {"title"=>"title", "body"=>"body", "tags"=>["app", "other"]}
+
+    post "/api/v1/ideas", {"idea"=> idea_data}
 
     idea = Idea.last
     assert_equal "title", idea.title
     assert_equal "body",  idea.body
     assert_equal %w(app other),  idea.tags.pluck(:name)
-
   end
 
   test "delete an idea" do
@@ -40,10 +51,21 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
     assert_equal 0, Idea.count
   end
 
-  test "update an idea" do
+  test "update an idea without tags" do
+    idea_data = {"title"=>"title", "body"=>"body"}
     idea = Idea.create()
 
-    patch "/api/v1/ideas/#{idea.id}?title=title&body=body", {tags: ['app','other']}
+    patch "/api/v1/ideas/#{idea.id}", {"idea"=> idea_data}
+
+    assert_equal "title", idea.reload.title
+    assert_equal "body",  idea.reload.body
+  end
+
+  test "update an idea with tags" do
+    idea_data = {"title"=>"title", "body"=>"body", "tags"=>["app", "other"]}
+    idea = Idea.create()
+
+    patch "/api/v1/ideas/#{idea.id}", {"idea"=> idea_data}
 
     assert_equal "title", idea.reload.title
     assert_equal "body",  idea.reload.body

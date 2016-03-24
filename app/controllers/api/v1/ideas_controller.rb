@@ -6,11 +6,11 @@ class Api::V1::IdeasController < Api::ApiController
   end
 
   def create
-    respond_with :api, :v1, Idea.create(idea_params)
+    respond_with :api, :v1, Idea.create(TagLoader.for(idea_params))
   end
 
   def update
-    respond_with Idea.update(params[:id],idea_params)
+    respond_with Idea.update(params[:id],TagLoader.for(idea_params))
   end
 
   def destroy
@@ -19,10 +19,6 @@ class Api::V1::IdeasController < Api::ApiController
 
   private
     def idea_params
-      {title: params[:title], body: params[:body], tags: tags}
-    end
-
-    def tags
-      params[:tags].map{|tag| Tag.find_or_create_by(name: tag)}
+      params.require(:idea).permit(:title, :body, tags: [])
     end
 end

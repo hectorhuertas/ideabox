@@ -118,12 +118,13 @@ function updateIdea(){
   var title = $(this.parentElement).find('.title').text()
   var body  = $(this.parentElement).find('.body').text()
   var id = this.parentElement.dataset.id
-  var tags = this.parentElement.dataset.tags.split(" ")
+  var tags = this.parentElement.dataset.tags.split(" ").filter(function(w){return w})
+  var idea = {title: title, body: body, tags: tags}
 
   $.ajax({
     type: 'PATCH',
     url: '/api/v1/ideas/' + id,
-    data: {title:title, body:body, tags: tags}
+    data: {idea: idea}
   }).success(refreshIdeas)
 }
 
@@ -143,10 +144,11 @@ function deleteIdea(){
 
 function saveIdea(e){
   e.preventDefault()
+  var idea = {title: title(), body: body(), tags: tags()}
   $.ajax({
     type: 'POST',
     url: '/api/v1/ideas',
-    data: {title: title(), body: body(), tags: tags()}
+    data: {idea: idea}
   }).success(refreshIdeas)
   clearForm()
 }
