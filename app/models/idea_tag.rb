@@ -2,10 +2,9 @@ class IdeaTag < ActiveRecord::Base
   belongs_to :idea
   belongs_to :tag
 
-  after_destroy :bob
+  after_destroy :clear_unused
 
-  def bob
-    tag = self.tag
-    tag.destroy if tag.ideas.count == 0
+  def clear_unused
+    self.tag.destroy if self.tag.ideas.count == 0
   end
 end
