@@ -6,14 +6,15 @@ $(document).ready(function(){
   $('#idea-box').delegate('button.deleter',   'click', Idea.destroy)
   $('#idea-box').delegate('button.voter', 'click', Idea.vote)
   // $('#idea-box').delegate('button.voter', 'click', Voter.voteIdea)
+  $('#sort-by-quality').on('click', Sorter.byQuality)
+  // $('#sort-by-quality').on('click', sortByQuality)
 
   // refreshIdeas()
-  $('#sort-by-quality').on('click', sortByQuality)
   $('#fuzzy-filter').on('keyup', fuzzyFilter)
   $('#show-all').on('click', cleanFilters)
-  // $('#idea-box').delegate('button.editor',    'click', editIdea)
-  $('#idea-box').delegate('button.updater',   'click', updateIdea)
   $('#tag-list').delegate('button', 'click', filterTag)
+  // $('#idea-box').delegate('button.editor',    'click', editIdea)
+  // $('#idea-box').delegate('button.updater',   'click', updateIdea)
 
   $('#idea-box').delegate('span.title', 'focusout', updateTitle)
   $('#idea-box').delegate('span.body', 'click', editBody)
@@ -124,25 +125,25 @@ $(that).addClass('active')
 
 }
 
-function sortByQuality(){
-  var currentOrder = this.dataset.order
-
-  var sortedIdeas = $('.idea').sort(function(a,b){
-    var value = ['swill', 'plausible', 'genius']
-    var av = value.indexOf($(a).find('.label').text())
-    var bv = value.indexOf($(b).find('.label').text())
-
-    if (currentOrder === 'asc') {
-      return bv - av
-    } else { return av - bv }
-  })
-
-  if (currentOrder === 'asc') {
-    this.dataset.order = 'desc'
-  } else { this.dataset.order = 'asc' }
-
-  $('#idea-box').empty().append(sortedIdeas)
-}
+// function sortByQuality(){
+//   var currentOrder = this.dataset.order
+//
+//   var sortedIdeas = $('.idea').sort(function(a,b){
+//     var value = ['swill', 'plausible', 'genius']
+//     var av = value.indexOf($(a).find('.label').text())
+//     var bv = value.indexOf($(b).find('.label').text())
+//
+//     if (currentOrder === 'asc') {
+//       return bv - av
+//     } else { return av - bv }
+//   })
+//
+//   if (currentOrder === 'asc') {
+//     this.dataset.order = 'desc'
+//   } else { this.dataset.order = 'asc' }
+//
+//   $('#idea-box').empty().append(sortedIdeas)
+// }
 
 function fuzzyFilter(){
   var filter = $('#fuzzy-filter').val()
