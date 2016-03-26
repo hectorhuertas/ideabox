@@ -1,37 +1,21 @@
 var Idea = (function(){
-  var addLastIdea = function(ideas){
-    $('#idea-box').prepend(ElementFor.idea(ideas[0]))
-    // $('#idea-box').prepend(HtmlFor.idea(ideas[0]))
-    Tag.refreshAll()
+  var refreshAll = function(){
+    $.getJSON("/api/v1/ideas")
+    .then(renderIdeas)
+    .then(Tag.refreshAll())
   }
 
-  var replaceIdea = function(idea){
-    $('li[data-id="' + idea.id +'"]').replaceWith(ElementFor.idea(idea))
-    // $('li[data-id="' + idea.id +'"]').replaceWith(HtmlFor.idea(idea))
+  var renderIdeas = function(ideas){
+    var elements = ideas.map(ElementFor.idea)
+    $('#idea-box').empty().append(elements)
   }
-
-  var addAllIdeas = function(ideas){
-    ideas.forEach(function(idea){ $('#idea-box').append(ElementFor.idea(idea)) })
-    // ideas.forEach(function(idea){ $('#idea-box').append(HtmlFor.idea(idea)) })
-    Tag.refreshAll()
-  }
-
-  var destroyIdea = function(id){
-    $('li[data-id="' + id +'"]').remove()
-    Tag.refreshAll()
-  }
-
-  var addLast = function(id){ $.getJSON("/api/v1/ideas", addLastIdea) }
-
-  var addAll = function(){ $.getJSON("/api/v1/ideas", addAllIdeas) }
-
-  var reload = function(id){ $.getJSON("/api/v1/ideas/" + id, replaceIdea) }
 
   var clearForm = function(){
     $('#idea-title').val("")
     $('#idea-body').val("")
     $('#idea-tags').val("")
   }
+
   var sanitizeTags = function(tags){
     return tags.split(",")
                .map(function(t){return t.trim()})
@@ -46,19 +30,16 @@ var Idea = (function(){
     }
   }
 
-  var create = function(e){
-    e.preventDefault()
-    $.post('/api/v1/ideas', {idea: buildIdea()}, addLast)
-    clearForm()
+  var renderIdea = function(idea){
+    $('#idea-box').prepend(ElementFor.idea(idea))
   }
 
-  var destroy = function(e){
-    var id = $(e.target).closest('.idea').data('id')
-
-    $.ajax({
-      type: 'DELETE',
-      url: '/api/v1/ideas/' + id
-    }).success(destroyIdea(id))
+  var create = function(e){
+    e.preventDefault()
+    $.post('/api/v1/ideas', {idea: buildIdea()})
+     .then(renderIdea)
+     .then(clearForm)
+     .then(Tag.refreshAll)
   }
 
   var vote = function(e){
@@ -69,15 +50,29 @@ var Idea = (function(){
       type: 'PATCH',
       url: '/api/v1/ideas/' + id + '/vote?vote=' + vote
     }).success(reload(id))
+  }
 
+  var reload = function(id){
+    $.getJSON("/api/v1/ideas/" + id, replaceIdea) }
+
+  var replaceIdea = function(idea){
+    $('li[data-id="' + idea.id +'"]').replaceWith(ElementFor.idea(idea))
+  }
+
+  var destroyIdea = function(id){ $('li[data-id="' + id +'"]').remove() }
+
+  var destroy = function(e){
+    var id = $(e.target).closest('.idea').data('id')
+
+    $.ajax({ type: 'DELETE', url: '/api/v1/ideas/' + id })
+     .success(destroyIdea(id))
+     .then(Tag.refreshAll())
   }
 
   return {
-    reload: reload,
-    addLast: addLast,
-    addAll: addAll,
+    addAll: refreshAll,
     create: create,
-    destroy: destroy,
     vote: vote,
+    destroy: destroy,
   }
 })();
