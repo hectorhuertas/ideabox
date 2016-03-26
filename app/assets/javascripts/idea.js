@@ -106,7 +106,7 @@ var Idea = (function(){
 
 
   return {
-    addAll: refreshAll,
+    refreshAll: refreshAll,
     create: create,
     vote: vote,
     destroy: destroy,
