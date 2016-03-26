@@ -5,16 +5,10 @@ $(document).ready(function(){
   $('#save-idea').on('click', Idea.create)
   $('#idea-box').delegate('button.deleter',   'click', Idea.destroy)
   $('#idea-box').delegate('button.voter', 'click', Idea.vote)
-  // $('#idea-box').delegate('button.voter', 'click', Voter.voteIdea)
   $('#sort-by-quality').on('click', Sorter.byQuality)
-  // $('#sort-by-quality').on('click', sortByQuality)
-
-  // refreshIdeas()
-  $('#fuzzy-filter').on('keyup', fuzzyFilter)
-  $('#show-all').on('click', cleanFilters)
-  $('#tag-list').delegate('button', 'click', filterTag)
-  // $('#idea-box').delegate('button.editor',    'click', editIdea)
-  // $('#idea-box').delegate('button.updater',   'click', updateIdea)
+  $('#fuzzy-filter').on('keyup', Filter.search)
+  $('#show-all').on('click', Filter.clear)
+  $('#tag-list').delegate('button', 'click', Filter.byTag)
 
   $('#idea-box').delegate('span.title', 'focusout', updateTitle)
   $('#idea-box').delegate('span.body', 'click', editBody)
@@ -26,9 +20,6 @@ function editBody(e){
    var xx = $(e.target).replaceWith('<textarea class="form-control" id="idea-body-editor">' + body + '</textarea>')
    $('#idea-body-editor').height($('#idea-body-editor').prop('scrollHeight'));
    $('#idea-body-editor').focus()
-  //  $(e.target).closest('#idea-body').height($(this).prop('scrollHeight'));
-  //  $(e.target).closest('#idea-body').height($(this).prop('scrollHeight'));
-  // debugger
 }
 
 function updateBody(e){
@@ -67,63 +58,32 @@ $.ajax({
 //   e.target.focus()
 // }
 
-function cleanFilters(){
-  $.each($('.idea'), function(){ $(this).show() })
-  $('#fuzzy-filter').val("")
-  $('#tag-list button').removeClass('active')
+// function cleanFilters(){
+//   $.each($('.idea'), function(){ $(this).show() })
+//   $('#fuzzy-filter').val("")
+//   $('#tag-list button').removeClass('active')
+// }
 
-}
+// }
 
-function toggleFilter(e){
-  // debugger
-  if ($(this).hasClass('btn-primary-outline')) {
-    filterTag(e)
-  } else {
-    unfilterTag(e)
-  }
-  $(this).toggleClass('btn-primary-outline')
-  $(this).toggleClass('btn-primary')
-}
-
-function unfilterTag(e){
-  // debugger
-  var that = e.target
-  console.log(this);
-  var filter = $(that).html()
-
-  $.each($('.idea'), function(){
-    var title = $(this).find('.title').text()
-    var body  = $(this).find('.body') .text()
-    var text  = title + ': ' + body
-    // debugger
-
-    if (this.dataset.tags.includes(filter)) {
-      $(this).hide()
-    } else {
-      $(this).show()
-    }
-  })
-
-}
-
-function filterTag(e){
-  // debugger
-  var that = e.target
-  // console.log(this);
-  var filter = $(that).html()
-$(that).addClass('active')
-  $.each($('.idea'), function(){
-    var title = $(this).find('.title').text()
-    var body  = $(this).find('.body') .text()
-    var text  = title + ': ' + body
-    // debugger
-
-    if (!this.dataset.tags.includes(filter)) {
-      $(this).hide()
-    }
-  })
-
-}
+// function filterTag(e){
+//   // debugger
+//   var that = e.target
+//   // console.log(this);
+//   var filter = $(that).html()
+// $(that).addClass('active')
+//   $.each($('.idea'), function(){
+//     var title = $(this).find('.title').text()
+//     var body  = $(this).find('.body') .text()
+//     var text  = title + ': ' + body
+//     // debugger
+//
+//     if (!this.dataset.tags.includes(filter)) {
+//       $(this).hide()
+//     }
+//   })
+//
+// }
 
 // function sortByQuality(){
 //   var currentOrder = this.dataset.order
@@ -145,21 +105,21 @@ $(that).addClass('active')
 //   $('#idea-box').empty().append(sortedIdeas)
 // }
 
-function fuzzyFilter(){
-  var filter = $('#fuzzy-filter').val()
-
-  $.each($('.idea'), function(){
-    debugger
-    var title = $(this).find('.title').text()
-    var body  = $(this).find('.body') .text()
-    var text  = title + ': ' + body
-    if (text.includes(filter)) {
-      $(this).show()
-    } else {
-      $(this).hide()
-    }
-  })
-}
+// function fuzzyFilter(){
+//   var filter = $('#fuzzy-filter').val()
+//
+//   $.each($('.idea'), function(){
+//     debugger
+//     var title = $(this).find('.title').text()
+//     var body  = $(this).find('.body') .text()
+//     var text  = title + ': ' + body
+//     if (text.includes(filter)) {
+//       $(this).show()
+//     } else {
+//       $(this).hide()
+//     }
+//   })
+// }
 
 function updateIdea(){
   var title = $(this.parentElement).find('.title').text()
