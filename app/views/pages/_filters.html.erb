@@ -1,12 +1,37 @@
 <div id="filters" class="row card">
   <div class="card-block">
-    <div class="col-xs-12">
-      <button id="show-all" type="button" class="btn btn-success" name="sdf">All ideas</button>
-      <button id="sort-by-quality" type="button" class="btn btn-success descending" name="button">Sort by Quality</button>
-      <fieldset class="form-group">
-        <input type="text" class="form-control" id="fuzzy-filter" placeholder="Search...">
-      </fieldset>
-      <span id="tag-list" class=""></span>
+    <div class="row">
+      <div class="col-xs-3">
+        <div class="row">
+          <div class="col-xs-12">
+            <h4 class="display-4 text-xs-center">Filters</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button id="show-all" type="button" class="btn btn-info btn-block" name="show-all">Clear All Filters</button>
+            <button id="sort-by-quality" type="button" class="btn btn-success btn-block descending" name="button">Sort by Quality</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-9">
+        <form id="fuzzy-filter-form">
+          <div class="form-group row">
+            <label for="fuzzy-filter" class="col-xs-2 form-control-label">By Content: </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="fuzzy-filter" name="fuzzy-filter" placeholder="Search...">
+              <small class="text-muted">Show only ideas with the searched content.</small>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="tag-filter" class="col-xs-2 form-control-label">By Tags: </label>
+            <div class="col-sm-10">
+              <div id="tag-list"class=""></div>
+              <small class="text-muted">Show only ideas with the selected tags.</small>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

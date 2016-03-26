@@ -12,6 +12,7 @@ var Listener = (function(){
   var filters = function(){
     $('#sort-by-quality').on('click', Sorter.byQuality)
     $('#fuzzy-filter').on('keyup', Filter.byContent)
+    $('#fuzzy-filter-form').on('submit', function(e){e.preventDefault()})
     $('#show-all').on('click', Filter.clear)
     $('#tag-list').delegate('button', 'click', Filter.byTag)
   }

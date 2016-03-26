@@ -1,7 +1,7 @@
 var ElementFor = (function(){
   var tag = function(tag){
     return $(`
-      <button id="${tag.name}" type="button" class="ui btn btn-primary-outline"
+      <button id="${tag.name}" type="button" class="ui btn btn-primary-outline btn-sm"
        name="button" >${tag.name.replace("-", " ")}</button>
     `)
   }
