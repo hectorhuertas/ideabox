@@ -6,7 +6,7 @@ var Filter = (function(){
 
   var byTag = function(e){
     $(e.target).addClass('active')
-    var filter = e.target.textContent
+    var filter = e.target.textContent.replace(" ", "-")
     $.each($('.idea'), function(_,idea){filterTag(idea,filter)})
   }
 

@@ -2,8 +2,14 @@ var ElementFor = (function(){
   var tag = function(tag){
     return $(`
       <button id="${tag.name}" type="button" class="ui btn btn-primary-outline"
-       name="button" >${tag.name}</button>
+       name="button" >${tag.name.replace("-", " ")}</button>
     `)
+  }
+
+  var HTMLForTags = function(tags){
+    return tags.reduce(function(result, tag){
+      return result + `<span class="ui label label-primary label-pill">${tag && tag.replace("-", " ")}</span>`
+    },"")
   }
 
   var idea = function(idea){
@@ -24,8 +30,11 @@ var ElementFor = (function(){
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-5">
             <span class="body">${limitLength(idea.body)}</span>
+          </div>
+          <div class="col-xs-7">
+            ${HTMLForTags(idea.tags)}
           </div>
         </div>
       </li>

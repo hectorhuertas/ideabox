@@ -1,7 +1,7 @@
 var IdeaBuilder = (function(){
   var sanitizeTags = function(tags){
     return tags.split(",")
-               .map(function(t){return t.trim()})
+               .map(function(t){return t.trim().replace(" ", "-")})
                .filter(function(t){return t})
   }
 
