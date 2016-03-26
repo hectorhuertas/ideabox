@@ -1,15 +1,18 @@
 var Idea = (function(){
   var addLastIdea = function(ideas){
-    $('#idea-box').prepend(HtmlFor.idea(ideas[0]))
+    $('#idea-box').prepend(ElementFor.idea(ideas[0]))
+    // $('#idea-box').prepend(HtmlFor.idea(ideas[0]))
     Tag.refreshAll()
   }
 
   var replaceIdea = function(idea){
-    $('li[data-id="' + idea.id +'"]').replaceWith(HtmlFor.idea(idea))
+    $('li[data-id="' + idea.id +'"]').replaceWith(ElementFor.idea(idea))
+    // $('li[data-id="' + idea.id +'"]').replaceWith(HtmlFor.idea(idea))
   }
 
   var addAllIdeas = function(ideas){
-    ideas.forEach(function(idea){ $('#idea-box').append(HtmlFor.idea(idea)) })
+    ideas.forEach(function(idea){ $('#idea-box').append(ElementFor.idea(idea)) })
+    // ideas.forEach(function(idea){ $('#idea-box').append(HtmlFor.idea(idea)) })
     Tag.refreshAll()
   }
 
