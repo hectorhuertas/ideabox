@@ -1,43 +1,30 @@
 var Filter = (function(){
-  var search = function(){
-    var filter = $('#fuzzy-filter').val()
-
-    $.each($('.idea'), function(){
-      debugger
-      var title = $(this).find('.title').text()
-      var body  = $(this).find('.body') .text()
-      var text  = title + ': ' + body
-      if (text.includes(filter)) {
-        $(this).show()
-      } else {
-        $(this).hide()
-      }
-    })
+  var filterContent = function(idea, filter){
+    var title = $(idea).find('.title').text()
+    var body  = $(idea).find('.body') .text()
+    var text  = title + ': ' + body
+    text.includes(filter) ? $(idea).show() : $(idea).hide()
   }
 
-  var clear = function cleanFilters(){
-    $.each($('.idea'), function(){ $(this).show() })
+  var search = function(){
+    var filter = $('#fuzzy-filter').val()
+    $.each($('.idea'), function(_,idea){filterContent(idea,filter)})
+  }
+
+  var clear = function(){
+    $('.idea').show()
     $('#fuzzy-filter').val("")
     $('#tag-list button').removeClass('active')
   }
 
+  var filterTag = function(idea, filter){
+    if (!idea.dataset.tags.includes(filter)) { $(idea).hide() }
+  }
+
   var byTag = function(e){
-    // debugger
-    var that = e.target
-    // console.log(this);
-    var filter = $(that).html()
-  $(that).addClass('active')
-    $.each($('.idea'), function(){
-      var title = $(this).find('.title').text()
-      var body  = $(this).find('.body') .text()
-      var text  = title + ': ' + body
-      // debugger
-
-      if (!this.dataset.tags.includes(filter)) {
-        $(this).hide()
-      }
-    })
-
+    $(e.target).addClass('active')
+    var filter = e.target.textContent
+    $.each($('.idea'), function(_,idea){filterTag(idea,filter)})
   }
 
   return {
