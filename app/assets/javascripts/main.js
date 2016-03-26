@@ -4,7 +4,7 @@ $(document).ready(function(){
   $('#idea-box').delegate('button.deleter',   'click', Idea.destroy)
   $('#idea-box').delegate('button.voter', 'click', Idea.vote)
   $('#sort-by-quality').on('click', Sorter.byQuality)
-  $('#fuzzy-filter').on('keyup', Filter.search)
+  $('#fuzzy-filter').on('keyup', Filter.byContent)
   $('#show-all').on('click', Filter.clear)
   $('#tag-list').delegate('button', 'click', Filter.byTag)
 
