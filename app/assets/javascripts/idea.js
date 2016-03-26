@@ -1,7 +1,7 @@
 var Idea = (function(){
   var addLastIdea = function(ideas){
     $('#idea-box').prepend(HtmlFor.idea(ideas[0]))
-    // REFRESH TAGS!!!!!!
+    XRender.tags()
   }
 
   var replaceIdea = function(idea){
@@ -10,10 +10,12 @@ var Idea = (function(){
 
   var addAllIdeas = function(ideas){
     ideas.forEach(function(idea){ $('#idea-box').append(HtmlFor.idea(idea)) })
+    XRender.tags()
   }
 
   var destroyIdea = function(id){
     $('li[data-id="' + id +'"]').remove()
+    XRender.tags()
   }
 
   var addLast = function(id){ $.getJSON("/api/v1/ideas", addLastIdea) }
