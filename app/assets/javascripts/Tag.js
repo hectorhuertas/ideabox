@@ -8,8 +8,7 @@ var Tag = (function(){
   var createTagElements = function(tags){ return tags.map(ElementFor.tag) }
 
   var renderElements = function(elements){
-    $('#tag-list').empty()
-    $('#tag-list').append(elements)
+    $('#tag-list').empty().append(elements)
   }
 
   return {
