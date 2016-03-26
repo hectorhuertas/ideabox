@@ -1,17 +1,9 @@
 var ElementFor = (function(){
-  var colorFor = function(quality){
-    if (quality === 'genius')    { return 'success' }
-    if (quality === 'plausible') { return 'warning' }
-    if (quality === 'swill')     { return 'default' }
-  }
-
-  var limitLength = function(text){
-    if (text.length <= 100) {
-      return text
-    } else {
-      var short = text.substring(0,96)
-      return short.substring(0,text.lastIndexOf(" ")) + ' ...'
-    }
+  var tag = function(tag){
+    return $(`
+      <button id="${tag.name}" type="button" class="ui btn btn-primary-outline"
+       name="button" >${tag.name}</button>
+    `)
   }
 
   var idea = function(idea){
@@ -37,10 +29,26 @@ var ElementFor = (function(){
           </div>
         </div>
       </li>
-      `)
+    `)
+  }
+
+  var colorFor = function(quality){
+    if (quality === 'genius')    { return 'success' }
+    if (quality === 'plausible') { return 'warning' }
+    if (quality === 'swill')     { return 'default' }
+  }
+
+  var limitLength = function(text){
+    if (text.length <= 100) {
+      return text
+    } else {
+      var short = text.substring(0,96)
+      return short.substring(0,text.lastIndexOf(" ")) + ' ...'
+    }
   }
 
   return {
-    idea: idea
+    idea: idea,
+    tag: tag
   }
 })();
