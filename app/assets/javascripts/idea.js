@@ -1,14 +1,15 @@
 var Idea = (function(){
   var refreshAll = function(){
     $.getJSON("/api/v1/ideas")
-    .then(renderIdeas)
+    .then(XRender.ideas)
+    // .then(renderIdeas)
     .then(Tag.refreshAll())
   }
 
-  var renderIdeas = function(ideas){
-    var elements = ideas.map(ElementFor.idea)
-    $('#idea-box').empty().append(elements)
-  }
+  // var renderIdeas = function(ideas){
+  //   var elements = ideas.map(ElementFor.idea)
+  //   $('#idea-box').empty().append(elements)
+  // }
 
   var clearForm = function(){
     $('#idea-title').val("")
