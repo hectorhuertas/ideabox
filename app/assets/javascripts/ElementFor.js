@@ -17,7 +17,7 @@ var ElementFor = (function(){
             </span>
           </div>
           <div class="col-xs-6">
-            <span class="ui label label-pill label-${colorFor(idea.quality)}">${idea.quality}</span>
+            <span class="ui quality label label-pill label-${colorFor(idea.quality)}">${idea.quality}</span>
             <button type="button" name="button" class="ui deleter btn btn-danger pull-xs-right">Delete</button>
             <button type="button" name="button" class="ui voter btn btn-warning pull-xs-right">Downvote</button>
             <button type="button" name="button" class="ui voter btn btn-success pull-xs-right">Upvote</button>

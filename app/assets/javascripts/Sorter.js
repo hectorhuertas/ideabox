@@ -1,24 +1,20 @@
 var Sorter = (function(){
   var byQuality = function(){
-    var currentOrder = this.dataset.order
+    var desc = $(this).hasClass('descending')
+    $(this).toggleClass('descending')
 
-    var sortedIdeas = $('.idea').sort(function(a,b){
-      var value = ['swill', 'plausible', 'genius']
-      var av = value.indexOf($(a).find('.label').text())
-      var bv = value.indexOf($(b).find('.label').text())
+    var ideas = $('.idea').sort(function(a,b){return ideasSorter(a,b,desc)})
 
-      if (currentOrder === 'asc') {
-        return bv - av
-      } else { return av - bv }
-    })
-
-    if (currentOrder === 'asc') {
-      this.dataset.order = 'desc'
-    } else { this.dataset.order = 'asc' }
-
-    $('#idea-box').empty().append(sortedIdeas)
+    $('#idea-box').empty().append(ideas)
   }
 
+  var ideasSorter = function(firstElement,secondElement, isDescending){
+    var value = ['swill', 'plausible', 'genius']
+    var first  = value.indexOf($(firstElement).find('.quality').text())
+    var second = value.indexOf($(secondElement).find('.quality').text())
+
+    return isDescending ? second - first: first - second
+  }
 
   return {
     byQuality: byQuality
