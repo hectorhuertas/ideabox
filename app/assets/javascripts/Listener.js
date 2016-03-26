@@ -5,8 +5,8 @@ var Listener = (function(){
     $('#idea-box').delegate('button.deleter',   'click', Idea.destroy)
 
     $('#idea-box').delegate('span.body', 'click', Idea.editBody)
-    $('#idea-box').delegate('span.title', 'focusout', Idea.updateTitle)
-    $('#idea-box').delegate('#idea-body-editor', 'focusout', Idea.updateBody)
+    $('#idea-box').delegate('span.title', 'focusout', Idea.update)
+    $('#idea-box').delegate('#idea-body-editor', 'focusout', Idea.update)
   }
 
   var filters = function(){
