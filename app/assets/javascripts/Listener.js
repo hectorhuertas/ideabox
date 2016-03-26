@@ -4,7 +4,7 @@ var Listener = (function(){
     $('#idea-box').delegate('button.voter', 'click', Idea.vote)
     $('#idea-box').delegate('button.deleter',   'click', Idea.destroy)
 
-    $('#idea-box').delegate('span.body', 'click', Idea.editBody)
+    $('#idea-box').delegate('span.body', 'click', Idea.edit)
     $('#idea-box').delegate('span.title', 'focusout', Idea.update)
     $('#idea-box').delegate('#idea-body-editor', 'focusout', Idea.update)
   }
