@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  $('#idea-box').empty()
   refreshTags()
   Idea.addAll()
   $('#save-idea').on('click', Idea.create)
