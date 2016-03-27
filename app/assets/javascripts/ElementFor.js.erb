@@ -17,12 +17,14 @@ var ElementFor = (function(){
       <li data-id="${idea.id}" class="idea list-group-item"
       data-tags="${idea.tags.join(" ")}" data-full-body="${idea.body}">
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-5">
             <span class="title">
-              <h1 contentEditable="true">${idea.title}</h1>
+              <h3 class="" contentEditable="true">${idea.title}</h3>
             </span>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-7">
+<%= image_tag('thumbs_up', class:"img-fluid", style:"height:3em") %>
+
             <span class="ui quality label label-pill label-${colorFor(idea.quality)}">${idea.quality}</span>
             <button type="button" name="button" class="ui deleter btn btn-danger pull-xs-right">Delete</button>
             <button type="button" name="button" class="ui voter btn btn-warning pull-xs-right">Downvote</button>
