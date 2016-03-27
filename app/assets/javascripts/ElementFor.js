@@ -1,3 +1,31 @@
+// <div class="row">
+//   <div class="col-xs-5">
+//     <span class="title">
+//       <h3 class="" contentEditable="true">${idea.title}</h3>
+//     </span>
+//   </div>
+//   <div class="col-xs-7">
+//     <span class="ui quality label label-pill label-${colorFor(idea.quality)}">${idea.quality}</span>
+//     <button type="button" name="button" class="ui deleter btn btn-danger pull-xs-right">Delete</button>
+//     <button type="button" name="button" class="ui voter btn btn-warning pull-xs-right">Downvote</button>
+//     <button type="button" name="button" class="ui voter btn btn-success pull-xs-right">Upvote</button>
+//   </div>
+// </div>
+// <div class="row">
+//   <div class="col-xs-5">
+//     <span class="body">${limitLength(idea.body)}</span>
+//   </div>
+//   <div class="col-xs-7">
+//     ${HTMLForTags(idea.tags)}
+//   </div>
+// </div>
+
+
+
+
+// <span class="ui quality label label-pill label-${colorFor(idea.quality)}">${idea.quality}</span>
+
+
 var ElementFor = (function(){
   var tag = function(tag){
     return $(`
@@ -16,27 +44,41 @@ var ElementFor = (function(){
     return $(`
       <li data-id="${idea.id}" class="idea list-group-item"
       data-tags="${idea.tags.join(" ")}" data-full-body="${idea.body}">
-        <div class="row">
-          <div class="col-xs-5">
-            <span class="title">
-              <h3 class="" contentEditable="true">${idea.title}</h3>
-            </span>
+
+
+      <div class="row">
+        <div class="col-xs-5">
+          <div class="row">
+            <div class="col-xs-12">
+              <span class="title">
+                <h3 class="display-1" contentEditable="true">${idea.title}</h3>
+              </span>
+            </div>
           </div>
-          <div class="col-xs-7">
-            <span class="ui quality label label-pill label-${colorFor(idea.quality)}">${idea.quality}</span>
-            <button type="button" name="button" class="ui deleter btn btn-danger pull-xs-right">Delete</button>
+          <div class="row">
+            <div class="col-xs-12">
+              <span class="body">${limitLength(idea.body)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">${HTMLForTags(idea.tags)}</div>
+        <div class="col-xs-3">
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="button" name="button" class="ui deleter btn btn-danger pull-xs-right">Delete</button>
+              <button type="button" name="button" class="ui btn btn-${colorFor(idea.quality)}-outline pull-xs-right" >${idea.quality}</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
             <button type="button" name="button" class="ui voter btn btn-warning pull-xs-right">Downvote</button>
             <button type="button" name="button" class="ui voter btn btn-success pull-xs-right">Upvote</button>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-xs-5">
-            <span class="body">${limitLength(idea.body)}</span>
-          </div>
-          <div class="col-xs-7">
-            ${HTMLForTags(idea.tags)}
-          </div>
-        </div>
+      </div>
+
+
       </li>
     `)
   }
