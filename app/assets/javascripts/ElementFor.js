@@ -23,8 +23,6 @@ var ElementFor = (function(){
             </span>
           </div>
           <div class="col-xs-7">
-<%= image_tag('thumbs_up', class:"img-fluid", style:"height:3em") %>
-
             <span class="ui quality label label-pill label-${colorFor(idea.quality)}">${idea.quality}</span>
             <button type="button" name="button" class="ui deleter btn btn-danger pull-xs-right">Delete</button>
             <button type="button" name="button" class="ui voter btn btn-warning pull-xs-right">Downvote</button>
