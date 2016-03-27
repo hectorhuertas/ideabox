@@ -4,7 +4,7 @@ Author: Hector Huertas
 
 [Live on Heroku](https://ideabox-hector.herokuapp.com/)
 
-[Original proyect specifications](/lib/assets/original_specs.md)
+[Original project specifications](/lib/assets/original_specs.md)
 
 ## Overview
 
