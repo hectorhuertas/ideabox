@@ -1,8 +1,8 @@
 var Listener = (function(){
   var idea = function(){
     $('#save-idea').on('click', Idea.create)
-    $('#idea-box').delegate('button.voter', 'click', Idea.vote)
-    $('#idea-box').delegate('button.deleter',   'click', Idea.destroy)
+    $('#idea-box').delegate('a.voter', 'click', Idea.vote)
+    $('#idea-box').delegate('a.deleter', 'click', Idea.destroy)
 
     $('#idea-box').delegate('span.body', 'click', Idea.edit)
     $('#idea-box').delegate('span.title', 'focusout', Idea.update)

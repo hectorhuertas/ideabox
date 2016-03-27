@@ -41,8 +41,7 @@ var Idea = (function(){
 
   var vote = function(e){
     var id = $(e.target).closest('.idea').data('id')
-    var vote = e.target.textContent.toLowerCase()
-
+    var vote = e.target.parentElement.id
     $.ajax({
       type: 'PATCH',
       url: '/api/v1/ideas/' + id + '/vote?vote=' + vote
