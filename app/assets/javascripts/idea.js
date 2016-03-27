@@ -7,10 +7,16 @@ var Idea = (function(){
 
   var create = function(e){
     e.preventDefault()
-    $.post('/api/v1/ideas', {idea: IdeaBuilder.run()})
-     .then(XRender.newIdea)
-     .then(clearForm)
-     .then(Tag.refreshAll)
+    var idea = IdeaBuilder.run()
+    if(idea){
+      $.post('/api/v1/ideas', {idea: idea})
+      .success(XRender.newIdea)
+      .then(clearForm)
+      .then(Tag.refreshAll)
+    } else {
+      $('#idea-validator').fadeIn(500);
+      setTimeout(function(){ $('#idea-validator').fadeOut(500); }, 5000)
+    }
   }
 
   var edit = function(e){

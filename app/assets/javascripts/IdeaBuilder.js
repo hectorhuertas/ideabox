@@ -6,10 +6,10 @@ var IdeaBuilder = (function(){
   }
 
   var run = function(){
-    return {
-      title: $('#idea-title').val(),
-      body: $('#idea-body').val(),
-      tags: sanitizeTags($('#idea-tags').val())
+    var title = $('#idea-title').val()
+    var body  = $('#idea-body').val()
+    if(title && body){
+      return {title:title, body:body, tags: sanitizeTags($('#idea-tags').val())}
     }
   }
 
