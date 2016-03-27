@@ -33,7 +33,7 @@ var ElementFor = (function(){
           </div>
           <div class="col-xs-3">${HTMLForTags(idea.tags)}</div>
           <div class="col-xs-2">
-            <button type="button" name="button" class="ui btn btn-block btn-${colorFor(idea.quality)}" >${idea.quality}</button>
+            <button type="button" name="button" class="ui quality btn btn-block btn-${colorFor(idea.quality)}" >${idea.quality}</button>
           </div>
           <div class="col-xs-2">
             <a id="deleter"  class="ui deleter pull-xs-right"><i class="fa fa-2x fa-trash-o"       style="height:0px; "></i></a>
