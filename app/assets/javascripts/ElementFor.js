@@ -55,8 +55,8 @@ var ElementFor = (function(){
     if (text.length <= 100) {
       return text
     } else {
-      var short = text.substring(0,96)
-      return short.substring(0,text.lastIndexOf(" ")) + ' ...'
+      var short = text.substring(0,100)
+      return short.substring(0,short.lastIndexOf(" ")) + '...'
     }
   }
 
