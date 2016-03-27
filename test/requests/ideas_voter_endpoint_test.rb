@@ -6,7 +6,7 @@ class IdeasVoterEnpointTest < ActionDispatch::IntegrationTest
   end
 
   test "upvote idea" do
-    idea = Idea.create()
+    idea = Idea.create(title: "title", body: "body")
 
     patch "/api/v1/ideas/#{idea.id}/vote?vote=upvote"
 
@@ -14,7 +14,7 @@ class IdeasVoterEnpointTest < ActionDispatch::IntegrationTest
   end
 
   test "downvote idea" do
-    idea = Idea.create(quality: 2)
+    idea = Idea.create(title: "title", body: "body", quality: 2)
 
     patch "/api/v1/ideas/#{idea.id}/vote?vote=downvote"
 
