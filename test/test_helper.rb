@@ -16,6 +16,9 @@ class ActiveSupport::TestCase
 
   def create_ideas(n)
     ideas = []
-    n.times { ideas << Idea.create() } && ideas
+    n.times do |n|
+      ideas << Idea.create(title: "Title_#{n}", body: "Body_#{n}") 
+    end
+    ideas
   end
 end

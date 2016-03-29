@@ -44,7 +44,7 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
   end
 
   test "delete an idea" do
-    idea = Idea.create()
+    idea = Idea.create(title: "title", body: "body")
 
     delete "/api/v1/ideas/#{idea.id}"
 
@@ -53,7 +53,7 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
 
   test "update an idea without tags" do
     idea_data = {"title"=>"title", "body"=>"body"}
-    idea = Idea.create()
+    idea = Idea.create(title: "title", body: "body")
 
     patch "/api/v1/ideas/#{idea.id}", {"idea"=> idea_data}
 
@@ -63,7 +63,7 @@ class IdeasEndpointTest < ActionDispatch::IntegrationTest
 
   test "update an idea with tags" do
     idea_data = {"title"=>"title", "body"=>"body", "tags"=>["app", "other"]}
-    idea = Idea.create()
+    idea = Idea.create(title: "title", body: "body")
 
     patch "/api/v1/ideas/#{idea.id}", {"idea"=> idea_data}
 

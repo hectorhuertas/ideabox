@@ -1,6 +1,8 @@
 class Idea < ActiveRecord::Base
   has_many :idea_tags, dependent: :destroy
   has_many :tags, through: :idea_tags
+  validates :title, presence: true
+  validates :body, presence: true
 
   enum quality: %w(swill plausible genius)
 
