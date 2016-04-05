@@ -12,6 +12,8 @@ gem 'puma'
 gem 'responders'
 gem "active_model_serializers", github: "rails-api/active_model_serializers"
 gem 'font-awesome-sass', '~> 4.5.0'
+gem 'sprockets'
+gem "sprockets-es6"
 
 group :development, :test do
   gem 'pry'
